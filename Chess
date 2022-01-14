@@ -1,0 +1,152 @@
+public class Board {
+    private Piece[][] board;
+
+    public Board(){
+        board = new Piece[8][8];
+        for (int j = 0; j < 8; j++) {
+            for (int k = 0; k < 8; k++) {
+                if(j == 0){
+                    if(k == 0){
+                        board[j][k] = new Piece("rook",1,1,true);
+                    }
+                    else if(k == 1){
+                        board[j][k] = new Piece("knight",2,1,true);
+                    }
+                    else if(k == 2){
+                        board[j][k] = new Piece("bishop",3,1,true);
+                    }
+                    else if(k == 3){
+                        board[j][k] = new Piece("queen",4,1,true);
+                    }
+                    else if(k == 4){
+                        board[j][k] = new Piece("king",5,1,true);
+                    }
+                    else if(k == 5){
+                        board[j][k] = new Piece("bishop1",6,1,true);
+                    }
+                    else if(k == 6){
+                        board[j][k] = new Piece("knight1",7,1,true);
+                    }
+                    else{
+                        board[j][k] = new Piece("rook1",8,1,true);
+                    }
+                }
+                else if(j == 1){
+                    board[j][k] = new Piece("p",k,2,true);
+                }
+                else if(j == 6){
+                    board[j][k] = new Piece("p",k,7,false);
+                }
+                else if(j == 7){
+                    if(k == 0){
+                        board[j][k] = new Piece("r",1,8,false);
+                    }
+                    else if(k == 1){
+                        board[j][k] = new Piece("n",2,8,true);
+                    }
+                    else if(k == 2){
+                        board[j][k] = new Piece("b",3,8,true);
+                    }
+                    else if(k == 3){
+                        board[j][k] = new Piece("q",4,8,true);
+                    }
+                    else if(k == 4){
+                        board[j][k] = new Piece("k",5,8,true);
+                    }
+                    else if(k == 5){
+                        board[j][k] = new Piece("b",6,8,true);
+                    }
+                    else if(k == 6){
+                        board[j][k] = new Piece("n",7,8,true);
+                    }
+                    else{
+                        board[j][k] = new Piece("r",8,8,true);
+                    }
+                }
+                else{
+                    board[j][k] = new Piece("e",j,k,false);
+                }
+            }
+        }
+    }
+
+    public boolean isValidMove(int x, int y, Piece piece, boolean inCheck){
+        if(x < 1 || x > 8 || y < 1 || y > 8){
+            return false;
+        }
+        int currentX = piece.getX();
+        int currentY = piece.getY();
+        if(piece.getName().equals("r")){
+            if(currentX == x && currentY != y){
+                while(true){
+                    if(y > currentY){
+                        currentY++;
+                    }
+                    else{
+                        currentY--;
+                    }
+                    if(!board[x][currentY].getName().equals("e")){
+                        return currentY == y;
+                    }
+                    if(currentY == y){
+                        return true;
+                    }
+                }
+            }
+            else if(currentY == y && currentX != x){
+                while(true){
+                    if(x > currentX){
+                        currentX++;
+                    }
+                    else{
+                        currentX--;
+                    }
+                    if(!board[currentX][y].getName().equals("e")){
+                        return currentX == x;
+                    }
+                    if(currentX == x){
+                        return true;
+                    }
+                }
+            }
+            else{
+                return false;
+            }
+        }//ROOK
+        else if(piece.getName().equals("b")){
+            if(Math.abs(currentX - x) != Math.abs(currentY - y)){
+                return false;
+            }
+            else{
+                while(currentX != x){
+                    if(currentX>x){
+                        currentX++;
+                    }
+                    else{
+                        currentX--;
+                    }
+                    if(currentY>y){
+                        currentY++;
+                    }
+                    else{
+                        currentY--;
+                    }
+                    if(!board[currentX][currentY].getName().equals("empty")){
+                        return currentX == x;
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean inCheck(boolean white){
+        if(white){
+
+        }
+        else{
+
+        }
+        return false;
+    }
+}
